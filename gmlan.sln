@@ -9,6 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Gmlan.Middlewares.Messa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Gmlan.Middlewares.MongoDB", "Infrastructure\Com.Gmlan.Middlewares.MongoDB\Com.Gmlan.Middlewares.MongoDB.csproj", "{89EB6F60-BEBE-4AF7-A41A-FB47C1E49710}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C4DB9346-DE35-40DC-9D44-C81C0D112DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Gmlan.Core", "Core\Com.Gmlan.Core\Com.Gmlan.Core.csproj", "{9A8098FB-9899-4518-9E6E-9E40AC590D3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{F66E8668-16AA-48CE-9E9C-D8395CD67F85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Gmlan.Scheduler", "Service\Com.Gmlan.Scheduler\Com.Gmlan.Scheduler.csproj", "{D0F85016-0348-4211-B56C-5801558D788A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.Gmlan.Scheduler.JobInjector", "Service\Com.Gmlan.Scheduler.JobInjector\Com.Gmlan.Scheduler.JobInjector.csproj", "{9602D3C6-D946-4727-A2EB-F1F5B276E53B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +33,18 @@ Global
 		{89EB6F60-BEBE-4AF7-A41A-FB47C1E49710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89EB6F60-BEBE-4AF7-A41A-FB47C1E49710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89EB6F60-BEBE-4AF7-A41A-FB47C1E49710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8098FB-9899-4518-9E6E-9E40AC590D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8098FB-9899-4518-9E6E-9E40AC590D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8098FB-9899-4518-9E6E-9E40AC590D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8098FB-9899-4518-9E6E-9E40AC590D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F85016-0348-4211-B56C-5801558D788A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F85016-0348-4211-B56C-5801558D788A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F85016-0348-4211-B56C-5801558D788A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F85016-0348-4211-B56C-5801558D788A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9602D3C6-D946-4727-A2EB-F1F5B276E53B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9602D3C6-D946-4727-A2EB-F1F5B276E53B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9602D3C6-D946-4727-A2EB-F1F5B276E53B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9602D3C6-D946-4727-A2EB-F1F5B276E53B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +52,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4E15FE16-1782-4B56-B9F7-3471484B3A5D} = {35BBD844-DB3C-44CD-A567-28BE4348A332}
 		{89EB6F60-BEBE-4AF7-A41A-FB47C1E49710} = {35BBD844-DB3C-44CD-A567-28BE4348A332}
+		{9A8098FB-9899-4518-9E6E-9E40AC590D3B} = {C4DB9346-DE35-40DC-9D44-C81C0D112DCB}
+		{D0F85016-0348-4211-B56C-5801558D788A} = {F66E8668-16AA-48CE-9E9C-D8395CD67F85}
+		{9602D3C6-D946-4727-A2EB-F1F5B276E53B} = {F66E8668-16AA-48CE-9E9C-D8395CD67F85}
 	EndGlobalSection
 EndGlobal
