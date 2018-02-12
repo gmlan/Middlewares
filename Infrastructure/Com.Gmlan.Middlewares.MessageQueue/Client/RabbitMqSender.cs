@@ -27,8 +27,11 @@ namespace Com.Gmlan.Middlewares.MessageQueue.Client
         {
             using (var connection = GetConnection())
             {
+                BindConnectionEvent(connection);
                 using (var channel = connection.CreateModel())
                 {
+                    BindChannelEvent(channel);
+
                     if (!string.IsNullOrEmpty(_queue))
                         channel.QueueDeclare(_queue, true, false, false, Arguments);
 

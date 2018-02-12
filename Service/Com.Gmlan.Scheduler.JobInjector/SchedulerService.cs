@@ -7,6 +7,7 @@ using log4net;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Com.Gmlan.Middlewares.MessageQueue.Extension;
 
 namespace Com.Gmlan.Scheduler.JobInjector
 {
@@ -35,10 +36,17 @@ namespace Com.Gmlan.Scheduler.JobInjector
 
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
+         
+            var exchange =
+              settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_DEFAULT_EXCHANGE);
+            var routekey =
+                settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_DEFAULT_ROUTEKEY);
             _rabbitMqSender = new RabbitMqSender<MessageBody>(
                 settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_CONNECTIONSTRING),
-                settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_DEFAULT_EXCHANGE),
-                settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_DEFAULT_ROUTEKEY));
+                exchange, routekey);
+
+            _rabbitMqSender.SubscribeEvents(message => { _log.Info($"{exchange}_{routekey} : {message}"); });
+
         }
 
 

@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Com.Gmlan.Middlewares.MessageQueue.Client
 {
@@ -24,8 +25,26 @@ namespace Com.Gmlan.Middlewares.MessageQueue.Client
 
         public void Dispose()
         {
-            _rabbitMqChannel?.Dispose();
-            _rabbitMqConnection?.Dispose();
+            try
+            {
+                if (_rabbitMqChannel != null && _rabbitMqChannel.IsOpen)
+                {
+                    _rabbitMqChannel.Close();
+                    _rabbitMqChannel = null;
+                }
+
+                if (_rabbitMqConnection != null && _rabbitMqConnection.IsOpen)
+                {
+                    _rabbitMqConnection.Close();
+                    _rabbitMqConnection = null;
+                }
+            }
+            catch (IOException ex)
+            {
+                // Close() may throw an IOException if connection
+                // dies - but that's ok (handled by reconnect)
+            }
+
         }
 
         public void Start()
@@ -35,6 +54,10 @@ namespace Com.Gmlan.Middlewares.MessageQueue.Client
 
             _rabbitMqChannel.BasicQos(0, _maxFetchCount, true);
             _rabbitMqChannel.QueueDeclare(_queue, true, false, false, Arguments);
+
+            //Subscribe event
+            base.BindConnectionEvent(_rabbitMqConnection);
+            base.BindChannelEvent(_rabbitMqChannel);
 
             //setup listener
             var consumer = new EventingBasicConsumer(_rabbitMqChannel);

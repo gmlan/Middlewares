@@ -12,6 +12,7 @@ using log4net;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Com.Gmlan.Middlewares.MessageQueue.Extension;
 
 namespace Com.Gmlan.Scheduler
 {
@@ -50,6 +51,7 @@ namespace Com.Gmlan.Scheduler
                 _settingService.GetSettingValueByKey(Constant.SYSTEM_INFRASTRUCTURE_RABBITMQ_CONNECTIONSTRING),
                 _consumerQueue, false, (ushort)_maxFetchCount);
 
+            _receiver.SubscribeEvents(message => { _log.Info($"{_consumerQueue}:{message}"); });
             _receiver.Received += (model, ea) =>
             {
                 Task.Run(() => Run(ea));

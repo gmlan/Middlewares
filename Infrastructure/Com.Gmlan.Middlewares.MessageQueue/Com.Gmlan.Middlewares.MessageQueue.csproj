@@ -59,6 +59,7 @@
     <Compile Include="Event\ReceivedEventModel.cs" />
     <Compile Include="Extension\JsonExtension.cs" />
     <Compile Include="Client\Generic\RabbitMqSender.cs" />
+    <Compile Include="Extension\RabbitMqClientExtension.cs" />
     <Compile Include="Model\Generic\MessageBody.cs" />
     <Compile Include="Model\MessagePriority.cs" />
     <Compile Include="Model\QueueMessageModel.cs" />

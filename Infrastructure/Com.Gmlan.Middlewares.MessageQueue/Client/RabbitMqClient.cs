@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RabbitMQ.Client.Events;
 
 namespace Com.Gmlan.Middlewares.MessageQueue.Client
 {
@@ -92,5 +93,114 @@ namespace Com.Gmlan.Middlewares.MessageQueue.Client
                 throw new ArgumentNullException(nameof(hosts));
             return hosts.Split(',').Select(m => new AmqpTcpEndpoint(new Uri($"amqp://{m}"))).ToList();
         }
+
+
+        #region Event
+
+        protected void BindChannelEvent(IModel channel)
+        {
+            channel.BasicAcks += RaiseChannelBasicAcks;
+            channel.BasicNacks += RaiseChannelBasicNacks;
+            channel.BasicRecoverOk += RaiseChannelBasicRecoverOk;
+            channel.BasicReturn += RaiseChannelBasicReturn;
+            channel.CallbackException += RaiseChannelCallbackException;
+            channel.FlowControl += RaiseChannelFlowControl;
+            channel.ModelShutdown += RaiseChannelModelShutdown;
+        }
+
+        protected void BindConnectionEvent(IConnection connection)
+        {
+            connection.CallbackException += RaiseConnnectionCallbackException;
+            connection.ConnectionBlocked += RaiseConnectionBlocked;
+            connection.ConnectionRecoveryError += RaiseConnectionRecoveryError;
+            connection.ConnectionShutdown += RaiseConnectionShutdown;
+            connection.ConnectionUnblocked += ConnectionUnblocked;
+            connection.RecoverySucceeded += RaiseConnectionRecoverySucceeded;
+        }
+
+        public event EventHandler<CallbackExceptionEventArgs> ConnnectionCallbackException;
+
+        protected void RaiseConnnectionCallbackException(object sender, CallbackExceptionEventArgs callbackExceptionEventArgs)
+        {
+            ConnnectionCallbackException?.Invoke(sender, callbackExceptionEventArgs);
+        }
+
+
+        public event EventHandler<ConnectionBlockedEventArgs> ConnectionBlocked;
+
+        protected void RaiseConnectionBlocked(object sender, ConnectionBlockedEventArgs connectionBlockedEventArgs)
+        {
+            ConnectionBlocked?.Invoke(sender, connectionBlockedEventArgs);
+        }
+
+        public event EventHandler<ConnectionRecoveryErrorEventArgs> ConnectionRecoveryError;
+        protected void RaiseConnectionRecoveryError(object sender, ConnectionRecoveryErrorEventArgs connectionRecoveryErrorEventArgs)
+        {
+            ConnectionRecoveryError?.Invoke(sender, connectionRecoveryErrorEventArgs);
+        }
+
+        public event EventHandler<ShutdownEventArgs> ConnectionShutdown;
+        protected void RaiseConnectionShutdown(object sender, ShutdownEventArgs shutdownEventArgs)
+        {
+            ConnectionShutdown?.Invoke(sender, shutdownEventArgs);
+        }
+
+        public event EventHandler<EventArgs> ConnectionUnblocked;
+        protected void RaiseConnectionUnblocked(object sender, EventArgs eventArgs)
+        {
+            ConnectionUnblocked?.Invoke(sender, eventArgs);
+        }
+
+        public event EventHandler<EventArgs> ConnectionRecoverySucceeded;
+        protected void RaiseConnectionRecoverySucceeded(object sender, EventArgs eventArgs)
+        {
+            ConnectionRecoverySucceeded?.Invoke(sender, eventArgs);
+        }
+
+
+        public event EventHandler<BasicAckEventArgs> ChannelBasicAcks;
+        protected void RaiseChannelBasicAcks(object sender, BasicAckEventArgs basicAckEventArgs)
+        {
+            ChannelBasicAcks?.Invoke(sender, basicAckEventArgs);
+        }
+
+        public event EventHandler<BasicNackEventArgs> ChannelBasicNacks;
+        protected void RaiseChannelBasicNacks(object sender, BasicNackEventArgs basicNackEventArgs)
+        {
+            ChannelBasicNacks?.Invoke(sender, basicNackEventArgs);
+        }
+
+        public event EventHandler<EventArgs> ChannelBasicRecoverOk;
+        protected void RaiseChannelBasicRecoverOk(object sender, EventArgs eventArgs)
+        {
+            ChannelBasicRecoverOk?.Invoke(sender, eventArgs);
+        }
+
+        public event EventHandler<BasicReturnEventArgs> ChannelBasicReturn;
+        protected void RaiseChannelBasicReturn(object sender, BasicReturnEventArgs basicReturnEventArgs)
+        {
+            ChannelBasicReturn?.Invoke(sender, basicReturnEventArgs);
+        }
+
+        public event EventHandler<CallbackExceptionEventArgs> ChannelCallbackException;
+        protected void RaiseChannelCallbackException(object sender, CallbackExceptionEventArgs callbackExceptionEventArgs)
+        {
+            ChannelCallbackException?.Invoke(sender, callbackExceptionEventArgs);
+        }
+
+        public event EventHandler<FlowControlEventArgs> ChannelFlowControl;
+        protected void RaiseChannelFlowControl(object sender, FlowControlEventArgs flowControlEventArgs)
+        {
+            ChannelFlowControl?.Invoke(sender, flowControlEventArgs);
+        }
+
+        public event EventHandler<ShutdownEventArgs> ChannelModelShutdown;
+
+        protected void RaiseChannelModelShutdown(object sender, ShutdownEventArgs shutdownEventArgs)
+        {
+            ChannelModelShutdown?.Invoke(sender, shutdownEventArgs);
+        }
+
+        #endregion
     }
 }
